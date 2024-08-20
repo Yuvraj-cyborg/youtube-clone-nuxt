@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div class="video-container">
       <VideoPlayer :videoId="videoId" />
     </div>
   </template>
   
   <script lang="ts">
   import { defineComponent, computed } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useRoute } from '#app';
   import VideoPlayer from '~/components/VideoPlayer.vue';
   
   export default defineComponent({
@@ -15,7 +15,7 @@
     },
     setup() {
       const route = useRoute();
-        const videoId = computed(() => route.params.id as string);
+      const videoId = computed(() => route.params.id as string);
   
       return {
         videoId,
@@ -23,7 +23,6 @@
     },
   });
   </script>
-  
   
   <style scoped>
   .video-container {

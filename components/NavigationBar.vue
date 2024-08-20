@@ -71,15 +71,7 @@
       </ul>
     </div>
 
-    <div
-      class="absolute right-0 top-[60px] h-[calc(100vh-60px)]"
-      :class="{
-        'w-[calc(100%-70px)]' : !openSideNav,
-        'w-[calc(100%-240px)]': openSideNav,
-      }"
-    >
-      <slot />
-    </div>
+  
   </div>
 </template>
 
