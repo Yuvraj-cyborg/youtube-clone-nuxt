@@ -47,7 +47,7 @@ export default defineComponent({
     const config = useRuntimeConfig();
     const apiKey = config.public.youtubeApiKey;
     const videos = ref<VideoItem[]>([]);
-
+      console.log('YouTube API Key:', config.public.youtubeApiKey); 
     const fetchVideos = async () => {
       try {
         const response = await fetch(
