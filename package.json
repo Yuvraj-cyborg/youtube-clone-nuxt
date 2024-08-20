@@ -1,0 +1,27 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/typescript-build": "^3.0.2",
+    "@nuxtjs/axios": "^5.13.6",
+    "axios": "^1.7.4",
+    "nuxt": "^3.12.4",
+    "nuxt-mdi": "^2.1.1",
+    "vue": "latest",
+    "vue3-youtube": "^0.1.9"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^2.18.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.9"
+  }
+}
