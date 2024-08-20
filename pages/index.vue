@@ -42,20 +42,38 @@ interface VideoItem {
   statistics: VideoStatistics;
 }
 
+
 export default defineComponent({
   setup() {
     const config = useRuntimeConfig();
     const apiKey = config.public.youtubeApiKey;
     const videos = ref<VideoItem[]>([]);
-    const fetchVideos = async () => {
-      try {
-        const response = await fetch(
-          `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=anime&maxResults=10&key=${apiKey}`
-        );
-        const data = await response.json();
+    const searchQuery = ref('musicvideo'); 
+    async function fetchVideoDetails(videoIds: string[]) {
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${videoIds.join(',')}&key=${apiKey}`
+    );
+    const data = await response.json();
+    return data.items;
+  } catch (error) {
+    console.error('Error fetching video details:', error);
+    return [];
+  }
+}
 
-        videos.value = data.items.map((item: any) => ({
-          id: { videoId: item.id.videoId },
+    const fetchVideos = async (query: string) => {
+      try {
+        const searchResponse = await fetch(
+          `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(query)}&maxResults=10&key=${apiKey}`
+        );
+        const searchData = await searchResponse.json();
+        
+        const videoIds = searchData.items.map((item: any) => item.id.videoId);
+        const details = await fetchVideoDetails(videoIds);
+
+        videos.value = details.map((item: any) => ({
+          id: { videoId: item.id },
           snippet: {
             title: item.snippet.title,
             channelTitle: item.snippet.channelTitle,
@@ -64,18 +82,22 @@ export default defineComponent({
               high: { url: item.snippet.thumbnails?.high?.url || '' },
             }
           },
-          statistics: { viewCount: 'N/A' }, 
+          statistics: {
+            viewCount: item.statistics?.viewCount ? `${item.statistics.viewCount} views` : 'No views available',
+          }
         }));
       } catch (error) {
         console.error('Error fetching videos:', error);
       }
     };
 
-    onMounted(fetchVideos);
+    onMounted(() => fetchVideos(searchQuery.value));
 
-    return { videos };
+    return { videos, searchQuery, fetchVideos };
   },
 });
+
+
 </script>
 
 <style scoped>

@@ -6,6 +6,7 @@
       height="480"
       frameborder="0"
       allowfullscreen
+      title="YouTube video player"
     ></iframe>
   </div>
 </template>

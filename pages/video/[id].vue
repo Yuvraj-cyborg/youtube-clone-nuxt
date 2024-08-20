@@ -15,6 +15,7 @@
     },
     setup() {
       const route = useRoute();
+      // Match route parameter name with the dynamic segment
       const videoId = computed(() => route.params.id as string);
   
       return {

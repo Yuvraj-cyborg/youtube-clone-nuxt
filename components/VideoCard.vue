@@ -24,7 +24,6 @@ export default defineComponent({
     const router = useRouter();
 
     const handleClick = () => {
-      console.log('Video card clicked'); 
       router.push(`/video/${props.videoId}`); 
     };
 
