@@ -22,11 +22,13 @@
       <div class="w-[600px] md:block hidden">
         <div class="rounded-full flex items-center bg-[#222222]">
           <input
+            v-model="searchQuery"
+            @keydown.enter="emitSearchQuery"
             type="text"
             class="form-control block w-full px-5 py-1.5 text-base font-normal text-gray-200 bg-black placeholder-gray-400 bg-clip-padding border border-solid border-l-gray-700 border-y-gray-700 rounded-l-full transition ease-in-out m-0 border-transparent focus:ring-0"
             placeholder="Search"
           />
-          <MdiIcon icon="mdiMagnify" class="mx-6" :size="23" />
+          <MdiIcon icon="mdiMagnify" class="mx-6 cursor-pointer" :size="23" @click="emitSearchQuery" />
         </div>
       </div>
 
@@ -78,6 +80,13 @@
 
 <script lang="ts" setup>
   let openSideNav = ref(true);
+  const emit = defineEmits<{ (event: 'search', query: string): void }>();
+
+const searchQuery = ref('');
+
+const emitSearchQuery = () => {
+  emit('search', searchQuery.value);
+};
 </script>
 
 <style scoped>
