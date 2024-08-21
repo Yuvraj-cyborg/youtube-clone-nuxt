@@ -1,20 +1,31 @@
 <template>
-  <div class="video-player">
-    <iframe
-      :src="videoSrc"
-      width="100%"
-      height="480"
-      frameborder="0"
-      allowfullscreen
-      title="YouTube video player"
-    ></iframe>
+  <div class="flex flex-col h-screen">
+    <div class="bg-black w-full">
+      <div class="w-full h-64 md:w-1/2 mx-auto">
+        <iframe
+          :src="videoSrc"
+          class="w-full h-full"
+          frameborder="0"
+          allowfullscreen
+          title="YouTube video player"
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-4 bg-black text-white">
+      <VideoDescription :videoId="videoId" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
+import VideoDescription from '@/components/VideoDescription.vue';
 
 export default defineComponent({
+  components: {
+    VideoDescription,
+  },
   props: {
     videoId: {
       type: String,
@@ -30,11 +41,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.video-player {
-  width: 100%;
-  height: 100%;
-  background-color: black;
-}
-</style>
