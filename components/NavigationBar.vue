@@ -13,9 +13,11 @@
         </button>
         <div class="mx-2"></div>
         <div
-          class="flex text-white items-center justify-center mr-10 cursor-pointer font-roboto"
+          class="flex text-white items-center justify-center mr-10 cursor-pointer font-roboto gap-0.5"
         >
-          YOUTUBE
+          <img src="~/assets/images/YT-logo.png" alt="" width="36">
+          <img src="~/assets/images/YT-logo-text.png" alt="" width="70">
+
         </div>
       </div>
 
@@ -43,49 +45,48 @@
     </div>
     <div
       id="SideNav"
-      class="fixed top-[60px] left-0 h-[calc(100vh-60px)] bg-black z-10"
-      :class="[!openSideNav ? 'w-[70px]' : 'w-[240px]']"
+      class="fixed top-[60px] left-0 h-[calc(100vh-60px)] bg-black z-10 transition-all duration-300"
+      :class="openSideNav ? 'w-[240px]' : 'w-0'"
     >
-      <ul :class="[!openSideNav ? 'p-2' : 'px-5 pb-2 pt-[7px]']" class="w-full">
-        <SidenavItem :openSideNav="openSideNav" iconString="Home" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Add Video" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Delete Video" />
+      <ul v-if="openSideNav" class="p-5">
+        <SidenavItem :openSideNav="openSideNav" iconString="Home"  />
+        <SidenavItem :openSideNav="openSideNav" iconString="Music" @search="handleSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="Sport" @search="handleSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="Gaming" @search="handleSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="Movies" @search="handleSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="News" @search="handleSearch" />
         <div class="border-b border-b-gray-700 my-2.5"></div>
-        <SidenavItem :openSideNav="openSideNav" iconString="Music" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Sport" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Gaming" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Movies" />
-        <SidenavItem :openSideNav="openSideNav" iconString="News" />
-        <div v-if="openSideNav">
-          <div class="border-b border-b-gray-700 my-2.5" />
-          <div class="text-gray-400 text-[14px] font-extrabold">
-            About Press Copyright
-            <div>Contact us</div>
-            Creator Advertise Developers
-          </div>
-          <div>c</div>
-          <div class="text-gray-400 text-[14px] font-extrabold">
-            Terms Privacy Policy & Safety
-            <div>How Youtube works</div>
-            <span>Test new features</span>
-          </div>
+        <div class="text-gray-400 text-[14px] font-extrabold">
+          About Press Copyright
+          <div>Contact us</div>
+          Creator Advertise Developers
+        </div>
+        <div>c</div>
+        <div class="text-gray-400 text-[14px] font-extrabold">
+          Terms Privacy Policy & Safety
+          <div>How Youtube works</div>
+          <span>Test new features</span>
         </div>
       </ul>
     </div>
-
-  
   </div>
 </template>
 
-
 <script lang="ts" setup>
-  let openSideNav = ref(true);
-  const emit = defineEmits<{ (event: 'search', query: string): void }>();
+import { ref } from 'vue';
 
+const openSideNav = ref(true);
 const searchQuery = ref('');
+
+const emit = defineEmits<{ (event: 'search', query: string): void }>();
 
 const emitSearchQuery = () => {
   emit('search', searchQuery.value);
+};
+
+const handleSearch = (query: string) => {
+  searchQuery.value = ''; 
+  emit('search', query); 
 };
 </script>
 
