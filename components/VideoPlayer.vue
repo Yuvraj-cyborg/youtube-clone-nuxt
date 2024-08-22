@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col max-h-screen overflow-hidden">
-    <div class="flex w-full fixed top-10 left-0 right-0" style="height: 92.5vh;">
-      <div class="flex flex-col gap-y-10 gap-x-5 p-7 mx-20 mr-0 w-full overflow-auto">
-        <div class="max-w-[800px]">
-          <div>
+    <div class="flex flex-row fixed top-10 left-0 right-0" style="height: 92.5vh;">
+      <div class="flex flex-col flex-grow p-7 mx-20 mr-0 overflow-auto">
+        <div class="flex flex-col">
+          <div class="flex justify-center">
             <iframe
               :src="videoSrc"
               width="800"
@@ -50,10 +50,15 @@
               </div>
             </div>
           </div>
+
           <div class="mt-5 w-full">
             <VideoDescription :videoId="videoId" />
           </div>
         </div>
+      </div>
+
+      <div class="w-[500px] bg-black text-gray-200 p-7 overflow-auto">
+        <VideoComments :videoId="videoId" />
       </div>
     </div>
   </div>
@@ -64,10 +69,12 @@ import { defineComponent, ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { fetchVideoDetails } from "../services/youtubeService";
 import VideoDescription from '@/components/VideoDescription.vue';
+import VideoComments from '../components/VideoComments.vue';
 
 export default defineComponent({
   components: {
     VideoDescription,
+    VideoComments
   },
   setup() {
     const route = useRoute();
@@ -87,7 +94,9 @@ export default defineComponent({
     const videoSrc = computed(() => `https://www.youtube.com/embed/${videoId}?autoplay=1`);
 
     fetchVideoDetails(videoId).then((details) => {
-      videoDetails.value = details;
+      if (details) {
+        videoDetails.value = details;
+      }
     });
 
     return {
@@ -100,11 +109,31 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.flex {
+  display: flex;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
 .mt-5 {
   margin-top: 1.25rem;
 }
 
 .w-full {
   width: 100%;
+}
+
+.w-300px {
+  width: 300px;
+}
+
+.bg-gray-900 {
+  background-color: #1f2937; /* Dark gray background */
+}
+
+.text-gray-200 {
+  color: #e5e7eb; /* Light gray text */
 }
 </style>
