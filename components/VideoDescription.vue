@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black p-6 rounded-md text-gray-200 w-full md:w-1/2 mx-auto border border-gray-600">
+  <div class="bg-[#272727] rounded-md text-gray-200 w-full md:w-1/2 mx-auto p-5">
     <h2 class="text-lg font-semibold text-white mb-4">Description</h2>
     <p
       :class="{
@@ -14,9 +14,9 @@
     <button
       v-if="description.length > maxDescriptionLength"
       @click="toggleExpand"
-      class="mt-4 bg-red-600 text-white py-2 px-6 font-medium rounded hover:bg-red-700"
+      class="mt-4  text-white py-2 px-6 font-medium rounded"
     >
-      {{ isExpanded ? 'Show Less' : 'Show More' }}
+      {{ isExpanded ? 'Show Less..' : 'Show More' }}
     </button>
   </div>
 </template>

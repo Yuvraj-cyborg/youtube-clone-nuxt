@@ -51,3 +51,29 @@ export const fetchComments = async (videoId: string) => {
     return [];
   }
 };
+
+// New function to fetch recommended videos
+export const fetchRecommendedVideos = async (videoId: string) => {
+  const config = useRuntimeConfig();
+  const apiKey = config.public.youtubeApiKey;
+
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/search?relatedToVideoId=${videoId}&type=video&part=snippet&key=${apiKey}`
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.items.map((item: any) => ({
+      id: item.id.videoId,
+      title: item.snippet.title,
+      channelName: item.snippet.channelTitle,
+      views: 'N/A',  // You might need another API call to get views count
+      thumbnail: item.snippet.thumbnails.medium.url,
+    }));
+  } catch (error) {
+    console.error('Error fetching recommended videos:', error);
+    return [];
+  }
+};

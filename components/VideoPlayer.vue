@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col max-h-screen overflow-hidden">
+  <div class="flex flex-col items-center">
     <div class="flex flex-row fixed top-10 left-0 right-0" style="height: 92.5vh;">
       <div class="flex flex-col flex-grow p-7 mx-20 mr-0 overflow-auto">
         <div class="flex flex-col">
@@ -17,35 +17,35 @@
           </div>
 
           <div class="mt-5">
-            <p class="text-xl">{{ videoDetails.title }}</p>
-            <div class="flex justify-between mt-1 text-sm text-gray-400">
+            <p class="text-xl text-white pb-4">{{ videoDetails.title }}</p>
+            <div class="flex justify-between mt-1 text-sm text-white">
               <div>
                 <span class="after:content-['•'] after:mx-1">{{ videoDetails.views }} views</span>
                 <span>{{ videoDetails.age }} ago</span>
               </div>
               <div class="flex items-center gap-4 uppercase">
-                <div class="flex items-center gap-1 cursor-pointer">
-                  <i class="icon-like"></i>
-                  <strong>{{ videoDetails.likes }}</strong>
+                <div class="like flex gap-3 bg-[#272727] rounded-3xl p-3 items-center justify-between">
+                  <div class="flex items-center gap-2 cursor-pointer">
+                    <div class="pb-1">
+                      <MdiIcon icon="mdiThumbUpOutline" :size="20"/>
+                    </div>
+                    <p>{{ videoDetails.likes }}</p>
+                  </div>
+                  <div class="h-4 w-px bg-white"></div>
+                  <div class="flex items-center gap-1 cursor-pointer">
+                    <div class="pb-1">
+                      <MdiIcon icon="mdiThumbDownOutline" :size="20"/>
+                    </div>
+                  </div>
                 </div>
-                <div class="flex items-center gap-1 cursor-pointer">
-                  <i class="icon-dislike"></i>
-                  <strong>Dislike</strong>
+                <div class="flex items-center gap-1 cursor-pointer bg-[#272727] rounded-full p-1">
+                  <div class="pb-1"><MdiIcon icon="mdiShareOutline" :size="25"/></div>
                 </div>
-                <div class="flex items-center gap-1 cursor-pointer">
-                  <i class="icon-share"></i>
-                  <strong>Share</strong>
+                <div class="flex items-center gap-1 cursor-pointer bg-[#272727] rounded-full p-2">
+                  <MdiIcon icon="mdiDownloadOutline" :size="25"/>
                 </div>
-                <div class="flex items-center gap-1 cursor-pointer">
-                  <i class="icon-clip"></i>
-                  <strong>Clip</strong>
-                </div>
-                <div class="flex items-center gap-1 cursor-pointer">
-                  <i class="icon-save"></i>
-                  <strong>Save</strong>
-                </div>
-                <div class="flex items-center gap-1 cursor-pointer">
-                  <i class="icon-more"></i>
+                <div class="flex items-center gap-1 cursor-pointer bg-[#272727] rounded-full p-2">
+                  <MdiIcon icon="mdiDotsHorizontal" :size="20"/>
                 </div>
               </div>
             </div>
@@ -54,11 +54,13 @@
           <div class="mt-5 w-full">
             <VideoDescription :videoId="videoId" />
           </div>
+          <div class="w-full bg-black text-gray-200 mt-5 overflow-auto">
+            <VideoComments :videoId="videoId" />
+          </div>
         </div>
       </div>
-
-      <div class="w-[500px] bg-black text-gray-200 p-7 overflow-auto">
-        <VideoComments :videoId="videoId" />
+      <div class="flex w-[450px] bg-black text-gray-200 p-1 overflow-auto justify-center">
+        <RecommendedVideos :searchQuery="searchQuery" />
       </div>
     </div>
   </div>
@@ -70,15 +72,18 @@ import { useRoute } from 'vue-router';
 import { fetchVideoDetails } from "../services/youtubeService";
 import VideoDescription from '@/components/VideoDescription.vue';
 import VideoComments from '../components/VideoComments.vue';
+import RecommendedVideos from '../components/RecommendedVideos.vue'; // Ensure this import is correct
 
 export default defineComponent({
   components: {
     VideoDescription,
-    VideoComments
+    VideoComments,
+    RecommendedVideos
   },
   setup() {
     const route = useRoute();
     const videoId = route.params.id as string;
+    const searchQuery = ref(''); // Define search query here or get it from some state
 
     const videoDetails = ref({
       title: '',
@@ -103,37 +108,14 @@ export default defineComponent({
       videoSrc,
       videoDetails,
       videoId,
+      searchQuery,
     };
   },
 });
 </script>
 
 <style scoped>
-.flex {
-  display: flex;
-}
-
-.flex-grow {
-  flex-grow: 1;
-}
-
-.mt-5 {
-  margin-top: 1.25rem;
-}
-
 .w-full {
   width: 100%;
-}
-
-.w-300px {
-  width: 300px;
-}
-
-.bg-gray-900 {
-  background-color: #1f2937; /* Dark gray background */
-}
-
-.text-gray-200 {
-  color: #e5e7eb; /* Light gray text */
 }
 </style>

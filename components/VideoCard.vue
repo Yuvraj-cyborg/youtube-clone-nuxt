@@ -1,5 +1,8 @@
 <template>
-  <div class="video-card cursor-pointer" @click="handleClick">
+  <div 
+    class="video-card cursor-pointer transition-transform duration-200 ease-in-out transform hover:scale-105" 
+    @click="handleClick"
+  >
     <img :src="thumbnail" alt="thumbnail" class="rounded-lg" />
     <div class="mt-2">
       <h3 class="text-white text-sm">{{ title }}</h3>
@@ -12,6 +15,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useRouter } from '#app'; 
+
 export default defineComponent({
   props: {
     title: String,

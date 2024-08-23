@@ -1,6 +1,7 @@
 <template>
-  <div class="flex flex-col items-center">
-    <div class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
+  <div class="p-4">
+    <h2 class="text-lg font-bold text-white mb-4">Recommended Videos</h2>
+    <div class="flex flex-col gap-4">
       <VideoCard
         v-for="video in videos"
         :key="video.id.videoId"
@@ -10,6 +11,7 @@
         :channelThumbnail="video.snippet.thumbnails?.default?.url || ''"
         :thumbnail="video.snippet.thumbnails?.high?.url || ''"
         :videoId="video.id.videoId"
+        class="w-full"
       />
     </div>
   </div>
@@ -18,6 +20,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch, onMounted } from 'vue';
 import { useRuntimeConfig } from '#app';
+import VideoCard from '@/components/VideoCard.vue';
 
 interface VideoSnippet {
   title: string;
@@ -43,6 +46,9 @@ interface VideoItem {
 }
 
 export default defineComponent({
+  components: {
+    VideoCard,
+  },
   props: {
     searchQuery: {
       type: String,
@@ -53,7 +59,7 @@ export default defineComponent({
     const config = useRuntimeConfig();
     const apiKey = config.public.youtubeApiKey;
     const videos = ref<VideoItem[]>([]);
-    const defaultQuery = 'trending'; // Default keyword for home page
+    const defaultQuery = 'trending'; // Default keyword if no query is provided
 
     const fetchVideoDetails = async (videoIds: string[]) => {
       try {
@@ -96,7 +102,7 @@ export default defineComponent({
             }
           },
           statistics: {
-            viewCount: item.statistics?.viewCount ? `${item.statistics.viewCount} views` : 'No views available',
+            viewCount: item.statistics?.viewCount || 'No views available',
           }
         }));
       } catch (error) {
@@ -113,11 +119,9 @@ export default defineComponent({
       }
     });
 
-    // Fetch default videos on component mount
+    // Fetch videos based on searchQuery or default query on component mount
     onMounted(() => {
-      if (!props.searchQuery) {
-        fetchVideos(defaultQuery);
-      }
+      fetchVideos(props.searchQuery || defaultQuery);
     });
 
     return { videos };
@@ -126,5 +130,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* Add your styles here */
+/* Ensure VideoCard takes full width */
+.w-full {
+  width: 100%;
+}
 </style>
