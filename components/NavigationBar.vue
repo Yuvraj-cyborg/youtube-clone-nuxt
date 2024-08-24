@@ -56,13 +56,13 @@
         <SidenavItem :openSideNav="openSideNav" iconString="Movies" @search="handleSearch" />
         <SidenavItem :openSideNav="openSideNav" iconString="News" @search="handleSearch" />
         <div class="border-b border-b-gray-700 my-2.5"></div>
-        <div class="text-gray-400 text-[14px] font-extrabold">
+        <div class="text-gray-400 text-[14px] font-bold">
           About Press Copyright
           <div>Contact us</div>
           Creator Advertise Developers
         </div>
         <div>c</div>
-        <div class="text-gray-400 text-[14px] font-extrabold">
+        <div class="text-gray-400 text-[14px] font-bold">
           Terms Privacy Policy & Safety
           <div>How Youtube works</div>
           <span>Test new features</span>
