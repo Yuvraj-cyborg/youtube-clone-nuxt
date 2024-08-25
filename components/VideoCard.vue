@@ -46,6 +46,6 @@ export default defineComponent({
 
 <style scoped>
 .video-card {
-  @apply max-w-md w-full overflow-hidden; /* Adjust width to fit title */
+  @apply max-w-md w-full overflow-hidden; 
 }
 </style>

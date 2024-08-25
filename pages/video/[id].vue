@@ -29,7 +29,7 @@
   .video-container {
     width: 100%;
     height: 100vh;
-    background-color: black;
+    background-color: #0F0F0F;
     display: flex;
     justify-content: center;
     align-items: center;

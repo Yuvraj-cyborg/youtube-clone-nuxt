@@ -65,7 +65,7 @@ export default defineComponent({
     const videos = ref<VideoItem[]>([]);
     const nextPageToken = ref<string | null>(null);
     const isLoading = ref(false);
-    const defaultQuery = 'hiphop'; // Default keyword for the home page
+    const defaultQuery = 'hiphop'; 
 
     const fetchChannelImage = async (channelId: string): Promise<string> => {
       try {
@@ -90,11 +90,10 @@ export default defineComponent({
         return Promise.all(
           data.items
             .filter((item: any) => {
-              // Filter videos to include only those longer than 60 seconds (exclude shorts)
               const duration = item.contentDetails.duration;
               const minutes = parseInt(duration.replace(/^PT(\d+)M.*$/, '$1') || '0', 10);
               const seconds = parseInt(duration.replace(/^PT.*(\d+)S$/, '$1') || '0', 10);
-              return (minutes > 0) || (minutes === 0 && seconds > 60); // Filter out shorts
+              return (minutes > 0) || (minutes === 0 && seconds > 60);
             })
             .map(async (item: any) => {
               const channelImage = await fetchChannelImage(item.snippet.channelId);

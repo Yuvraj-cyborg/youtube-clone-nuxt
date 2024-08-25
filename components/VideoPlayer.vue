@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center bg-[#0F0F0F]">
     <div class="flex flex-row fixed top-10 left-0 right-0" style="height: 92.5vh;">
-      <div class="video-player flex flex-col flex-grow p-7 mx-20 mr-0 overflow-auto">
+      <div class="video-player flex flex-col flex-grow p-7 mx-20 mr-0 overflow-auto bg-[#0F0F0F]">
         <div class="flex flex-col">
           <div class="flex justify-center">
             <iframe
@@ -53,12 +53,12 @@
           <div class="mt-5 w-full">
             <VideoDescription :videoId="videoId" />
           </div>
-          <div class="video-comments w-full bg-black text-gray-200 mt-5 overflow-auto">
+          <div class="video-comments w-full bg-[#0F0F0F] text-gray-200 mt-5 overflow-auto">
             <VideoComments :videoId="videoId" />
           </div>
         </div>
       </div>
-      <div class="recomended-video flex w-[450px] bg-black text-gray-200 p-1 overflow-auto justify-center">
+      <div class="recomended-video flex w-[450px] bg-[#0F0F0F] text-gray-200 p-1 overflow-auto justify-center">
         <RecommendedVideos :searchQuery="searchQuery" />
       </div>
     </div>
@@ -122,5 +122,8 @@ export default defineComponent({
 }
 .video-player::-webkit-scrollbar {
   display: none
+}
+body{
+  background-color: #0F0F0F;
 }
 </style>
