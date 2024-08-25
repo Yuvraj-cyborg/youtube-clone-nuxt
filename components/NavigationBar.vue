@@ -2,7 +2,7 @@
   <div>
     <div
       id="TopNav"
-      class="bg-black text-white w-full h-[60px] flex justify-between items-center z-20 p-4 fixed top-0 left-0"
+      class="bg-[#0F0F0F] text-white w-full h-[60px] flex justify-between items-center z-20 p-4 fixed top-0 left-0"
     >
       <div class="flex items-center">
         <button
@@ -45,7 +45,7 @@
     </div>
     <div
       id="SideNav"
-      class="fixed top-[60px] left-0 h-[calc(100vh-60px)] bg-black z-10 transition-all duration-300"
+      class="fixed top-[60px] left-0 h-[calc(100vh-60px)] bg-[#0F0F0F] z-10 transition-all duration-300"
       :class="openSideNav ? 'w-[240px]' : 'w-0'"
     >
       <ul v-if="openSideNav" class="p-5">

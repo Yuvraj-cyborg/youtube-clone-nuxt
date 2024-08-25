@@ -1,20 +1,27 @@
 <template>
   <div 
-    class="video-card cursor-pointer transition-transform duration-200 ease-in-out transform hover:scale-105" 
+    class="video-card cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
     @click="handleClick"
   >
-    <img :src="thumbnail" alt="thumbnail" class="rounded-lg" />
-    <div class="mt-2">
-      <h3 class="text-white text-sm">{{ title }}</h3>
-      <p class="text-gray-400 text-xs">{{ user }}</p>
-      <p class="text-gray-400 text-xs">{{ views }}</p>
+    <img :src="thumbnail" alt="Thumbnail" class="w-full h-60 object-cover rounded-lg" />
+    <div class="p-4 flex items-start gap-3 rounded-lg">
+      <img 
+        :src="channelImage" 
+        alt="Channel Thumbnail" 
+        class="w-12 h-12 rounded-full object-cover"
+      />
+      <div class="flex flex-col justify-center flex-1">
+        <h3 class="text-white *:text-lg break-words overflow-hidden">{{ title }}</h3>
+        <p class="text-gray-300 text-sm truncate">{{ user }}</p>
+        <p class="text-gray-300 text-sm truncate">{{ views }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useRouter } from '#app'; 
+import { useRouter } from '#app';
 
 export default defineComponent({
   props: {
@@ -23,12 +30,13 @@ export default defineComponent({
     views: String,
     thumbnail: String,
     videoId: String,
+    channelImage: String,
   },
   setup(props) {
     const router = useRouter();
 
     const handleClick = () => {
-      router.push(`/video/${props.videoId}`); 
+      router.push(`/video/${props.videoId}`);
     };
 
     return { handleClick };
@@ -38,7 +46,6 @@ export default defineComponent({
 
 <style scoped>
 .video-card {
-  width: 100%;
-  max-width: 280px;
+  @apply max-w-md w-full overflow-hidden; /* Adjust width to fit title */
 }
 </style>

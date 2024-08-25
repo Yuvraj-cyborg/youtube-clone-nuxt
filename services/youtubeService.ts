@@ -2,6 +2,7 @@ import { useRuntimeConfig } from '#app';
 
 const API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
 
+// Fetch Video Details
 export const fetchVideoDetails = async (videoId: string) => {
   const config = useRuntimeConfig();
   const apiKey = config.public.youtubeApiKey;
@@ -15,14 +16,20 @@ export const fetchVideoDetails = async (videoId: string) => {
     }
     const data = await response.json();
     if (data.items.length > 0) {
+      const snippet = data.items[0].snippet;
+      const channelResponse = await fetch(
+        `${API_BASE_URL}/channels?part=snippet&id=${snippet.channelId}&key=${apiKey}`
+      );
+      const channelData = await channelResponse.json();
+
       return {
-        title: data.items[0].snippet.title,
+        title: snippet.title,
         views: data.items[0].statistics.viewCount,
-        age: data.items[0].snippet.publishedAt,  // Adjust if you need different data
+        age: snippet.publishedAt,  // Adjust if you need different data
         likes: data.items[0].statistics.likeCount,
-        description: data.items[0].snippet.description,
-        channelImage: data.items[0].snippet.thumbnails.default.url,
-        channelName: data.items[0].snippet.channelTitle,
+        description: snippet.description,
+        channelImage: channelData.items[0].snippet.thumbnails.default.url,
+        channelName: snippet.channelTitle,
         subscribers: 'N/A',  // You may need a separate API call to get subscriber count
       };
     }
@@ -33,6 +40,7 @@ export const fetchVideoDetails = async (videoId: string) => {
   }
 };
 
+// Fetch Comments
 export const fetchComments = async (videoId: string) => {
   const config = useRuntimeConfig();
   const apiKey = config.public.youtubeApiKey;
@@ -52,7 +60,7 @@ export const fetchComments = async (videoId: string) => {
   }
 };
 
-// New function to fetch recommended videos
+// Fetch Recommended Videos
 export const fetchRecommendedVideos = async (videoId: string) => {
   const config = useRuntimeConfig();
   const apiKey = config.public.youtubeApiKey;

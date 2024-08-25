@@ -59,7 +59,7 @@ export default defineComponent({
     const config = useRuntimeConfig();
     const apiKey = config.public.youtubeApiKey;
     const videos = ref<VideoItem[]>([]);
-    const defaultQuery = 'trending'; // Default keyword if no query is provided
+    const defaultQuery = 'trending'; 
 
     const fetchVideoDetails = async (videoIds: string[]) => {
       try {
@@ -110,16 +110,14 @@ export default defineComponent({
       }
     };
 
-    // Watch for changes in searchQuery and fetch videos accordingly
     watch(() => props.searchQuery, (newQuery) => {
       if (newQuery) {
         fetchVideos(newQuery);
       } else {
-        fetchVideos(defaultQuery); // Fetch default videos if searchQuery is empty
+        fetchVideos(defaultQuery); 
       }
     });
 
-    // Fetch videos based on searchQuery or default query on component mount
     onMounted(() => {
       fetchVideos(props.searchQuery || defaultQuery);
     });
