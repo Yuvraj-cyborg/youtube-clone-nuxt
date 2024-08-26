@@ -25,7 +25,10 @@
                   class="w-10 h-10 rounded-full cursor-pointer"
                   @click="goToChannelPage"
                 >
-                <span class="font-semibold">{{ videoDetails.channelName }}</span>
+                <div>
+                <span class="font-semibold text-xl">{{ videoDetails.channelName }}</span>
+                <p class="text-sm text-gray-400">{{ videoDetails.subscribers }} Subscribers</p>
+                </div>
               </div>
               <div class="flex items-center gap-4 uppercase">
                 <div class="like flex gap-3 bg-[#272727] rounded-3xl p-3 items-center justify-between">
@@ -54,13 +57,7 @@
               </div>
             </div>
           </div>
-
-          <!-- Description with Views and Time -->
           <div class="mt-5 w-full">
-            <p class="text-white">
-              <span>{{ videoDetails.views }} views</span>
-              <span class="ml-2">{{ videoDetails.age }} ago</span>
-            </p>
             <VideoDescription :videoId="videoId" />
           </div>
 
@@ -104,7 +101,8 @@ export default defineComponent({
       description: string;
       channelImage: string;
       channelName: string;
-      channelId: string; // Assuming you have the channelId here
+      channelId: string; 
+      subscribers: string;// Assuming you have the channelId here
     }>({
       title: '',
       views: '',
@@ -113,7 +111,8 @@ export default defineComponent({
       description: '',
       channelImage: '',
       channelName: '',
-      channelId: '' // Initialize with empty string
+      channelId: '',
+      subscribers: '', // Initialize with empty string
     });
 
     const videoSrc = computed(() => `https://www.youtube.com/embed/${videoId}?autoplay=1`);

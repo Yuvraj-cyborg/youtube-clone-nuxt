@@ -1,6 +1,10 @@
 <template>
   <div class="bg-[#272727] rounded-md text-gray-200 w-full md:w-1/2 mx-auto p-5">
     <h2 class="text-lg font-semibold text-white mb-4">Description</h2>
+    <div class="mb-4 text-gray-400">
+      <p><strong>Views:</strong> {{ views }}</p>
+      <p><strong>Uploaded:</strong> {{ uploadTime }}</p>
+    </div>
     <p
       :class="{
         'line-clamp-3': !isExpanded,
@@ -14,7 +18,7 @@
     <button
       v-if="description.length > maxDescriptionLength"
       @click="toggleExpand"
-      class="mt-4  text-white py-2 px-6 font-medium rounded"
+      class="mt-4 text-white py-2 px-6 font-medium rounded"
     >
       {{ isExpanded ? 'Show Less..' : 'Show More' }}
     </button>
@@ -34,6 +38,8 @@ export default defineComponent({
   },
   setup(props) {
     const description = ref<string>('');
+    const views = ref<string>('');
+    const uploadTime = ref<string>('');
     const isExpanded = ref<boolean>(false);
     const maxDescriptionLength = 50;
 
@@ -41,6 +47,8 @@ export default defineComponent({
       const video = await fetchVideoDetails(props.videoId);
       if (video) {
         description.value = video.description;
+        views.value = video.views;
+        uploadTime.value = new Date(video.age).toLocaleDateString(); // Format date as desired
       }
     };
 
@@ -54,6 +62,8 @@ export default defineComponent({
 
     return {
       description,
+      views,
+      uploadTime,
       isExpanded,
       toggleExpand,
       maxDescriptionLength,

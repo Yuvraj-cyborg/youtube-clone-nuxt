@@ -192,6 +192,6 @@ export default defineComponent({
 
 <style scoped>
 .loading-trigger {
-  height: 1px; /* Minimal height to act as a trigger */
+  height: 1px; 
 }
 </style>
