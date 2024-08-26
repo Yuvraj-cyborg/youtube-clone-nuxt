@@ -18,9 +18,14 @@
           <div class="mt-5">
             <p class="text-xl text-white pb-4">{{ videoDetails.title }}</p>
             <div class="flex justify-between mt-1 text-sm text-white">
-              <div>
-                <span class="after:content-['•'] after:mx-1">{{ videoDetails.views }} views</span>
-                <span>{{ videoDetails.age }} ago</span>
+              <div class="flex items-center gap-3">
+                <img
+                  :src="videoDetails.channelImage"
+                  alt="Channel Image"
+                  class="w-10 h-10 rounded-full cursor-pointer"
+                  @click="goToChannelPage"
+                >
+                <span class="font-semibold">{{ videoDetails.channelName }}</span>
               </div>
               <div class="flex items-center gap-4 uppercase">
                 <div class="like flex gap-3 bg-[#272727] rounded-3xl p-3 items-center justify-between">
@@ -50,9 +55,15 @@
             </div>
           </div>
 
+          <!-- Description with Views and Time -->
           <div class="mt-5 w-full">
+            <p class="text-white">
+              <span>{{ videoDetails.views }} views</span>
+              <span class="ml-2">{{ videoDetails.age }} ago</span>
+            </p>
             <VideoDescription :videoId="videoId" />
           </div>
+
           <div class="video-comments w-full bg-[#0F0F0F] text-gray-200 mt-5 overflow-auto">
             <VideoComments :videoId="videoId" />
           </div>
@@ -67,7 +78,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { fetchVideoDetails } from "../services/youtubeService";
 import VideoDescription from '@/components/VideoDescription.vue';
 import VideoComments from '../components/VideoComments.vue';
@@ -81,10 +92,20 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const videoId = route.params.id as string;
     const searchQuery = ref(''); // Define search query here or get it from some state
 
-    const videoDetails = ref({
+    const videoDetails = ref<{
+      title: string;
+      views: string;
+      age: string;
+      likes: string;
+      description: string;
+      channelImage: string;
+      channelName: string;
+      channelId: string; // Assuming you have the channelId here
+    }>({
       title: '',
       views: '',
       age: '',
@@ -92,22 +113,27 @@ export default defineComponent({
       description: '',
       channelImage: '',
       channelName: '',
-      subscribers: '',
+      channelId: '' // Initialize with empty string
     });
 
     const videoSrc = computed(() => `https://www.youtube.com/embed/${videoId}?autoplay=1`);
+
+    const goToChannelPage = () => {
+      router.push({ path: `/channel/${videoDetails.value.channelId}` });
+    };
 
     fetchVideoDetails(videoId).then((details) => {
       if (details) {
         videoDetails.value = details;
       }
     });
-
+   
     return {
       videoSrc,
       videoDetails,
       videoId,
       searchQuery,
+      goToChannelPage
     };
   },
 });
@@ -118,10 +144,10 @@ export default defineComponent({
   width: 100%;
 }
 .recomended-video::-webkit-scrollbar {
-  display: none
+  display: none;
 }
 .video-player::-webkit-scrollbar {
-  display: none
+  display: none;
 }
 body{
   background-color: #0F0F0F;
