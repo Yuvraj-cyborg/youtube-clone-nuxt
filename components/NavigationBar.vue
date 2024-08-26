@@ -17,14 +17,13 @@
         >
           <img src="~/assets/images/YT-logo.png" alt="" width="36">
           <img src="~/assets/images/YT-logo-text.png" alt="" width="70">
-
         </div>
       </div>
 
       <div class="w-[600px] md:block hidden">
         <div class="rounded-full flex items-center bg-[#222222]">
           <input
-            v-model="searchQuery"
+            v-model="localSearchQuery"
             @keydown.enter="emitSearchQuery"
             type="text"
             class="form-control block w-full px-5 py-1.5 text-base font-normal text-gray-200 bg-black placeholder-gray-400 bg-clip-padding border border-solid border-l-gray-700 border-y-gray-700 rounded-l-full transition ease-in-out m-0 border-transparent focus:ring-0"
@@ -49,7 +48,7 @@
       :class="openSideNav ? 'w-[240px]' : 'w-0'"
     >
       <ul v-if="openSideNav" class="p-5">
-        <SidenavItem :openSideNav="openSideNav" iconString="Home"  />
+        <SidenavItem :openSideNav="openSideNav" iconString="Home" />
         <SidenavItem :openSideNav="openSideNav" iconString="Music" @search="handleSearch" />
         <SidenavItem :openSideNav="openSideNav" iconString="Sport" @search="handleSearch" />
         <SidenavItem :openSideNav="openSideNav" iconString="Gaming" @search="handleSearch" />
@@ -73,21 +72,30 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { useSearchQuery } from '@/composables/useSearchQuery'; // Import the composable
 
 const openSideNav = ref(true);
-const searchQuery = ref('');
+const { searchQuery } = useSearchQuery();
+const localSearchQuery = ref(searchQuery.value); // Local state for input
 
-const emit = defineEmits<{ (event: 'search', query: string): void }>();
+const router = useRouter();
 
 const emitSearchQuery = () => {
-  emit('search', searchQuery.value);
+  searchQuery.value = localSearchQuery.value; // Update global search query
+  router.push({ path: '/', query: { search: localSearchQuery.value } }); // Redirect with query
 };
 
 const handleSearch = (query: string) => {
-  searchQuery.value = ''; 
-  emit('search', query); 
+  localSearchQuery.value = query;
+  searchQuery.value = query; // Update global search query
+  router.push({ path: '/', query: { search: query } }); // Redirect with query
 };
+
+watch(() => searchQuery.value, (newQuery) => {
+  localSearchQuery.value = newQuery;
+});
 </script>
 
 <style scoped>

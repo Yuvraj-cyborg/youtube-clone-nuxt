@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
       <VideoCard
         v-for="video in videos"
         :key="video.id.videoId"
@@ -17,11 +17,9 @@
   </div>
 </template>
 
-
-
 <script lang="ts">
-import { defineComponent, ref, watch, onMounted } from 'vue';
-import { useRuntimeConfig } from '#app';
+import { defineComponent, ref, watch, onMounted, onUnmounted } from 'vue';
+import { useRuntimeConfig, useRoute } from '#app';
 
 interface VideoSnippet {
   title: string;
@@ -62,10 +60,11 @@ export default defineComponent({
   setup(props) {
     const config = useRuntimeConfig();
     const apiKey = config.public.youtubeApiKey;
+    const route = useRoute();
     const videos = ref<VideoItem[]>([]);
     const nextPageToken = ref<string | null>(null);
     const isLoading = ref(false);
-    const defaultQuery = 'hiphop'; 
+    const defaultQuery = 'hiphop';
 
     const fetchChannelImage = async (channelId: string): Promise<string> => {
       try {
@@ -167,25 +166,18 @@ export default defineComponent({
     };
 
     watch(
-      () => props.searchQuery,
+      () => route.query.search,
       (newQuery) => {
-        if (newQuery) {
-          videos.value = []; // Clear existing videos on new search
-          nextPageToken.value = null;
-          fetchVideos(newQuery);
-        } else {
-          videos.value = []; // Clear existing videos on default query
-          nextPageToken.value = null;
-          fetchVideos(defaultQuery);
-        }
-      }
+        const query = newQuery as string || defaultQuery;
+        videos.value = []; // Clear existing videos on new search
+        nextPageToken.value = null;
+        fetchVideos(query);
+      },
+      { immediate: true } // Run immediately on setup
     );
 
     onMounted(() => {
-      if (!props.searchQuery) {
-        fetchVideos(defaultQuery);
-      }
-
+      handleScroll(); // Initial fetch on mount
       window.addEventListener('scroll', handleScroll);
     });
 
@@ -197,9 +189,9 @@ export default defineComponent({
   },
 });
 </script>
+
 <style scoped>
 .loading-trigger {
   height: 1px; /* Minimal height to act as a trigger */
 }
 </style>
-

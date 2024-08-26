@@ -39,6 +39,8 @@
   import ChannelDetails from '@/components/ChannelDetails.vue';
   import ChannelPlaylists from '@/components/ChannelPlaylists.vue';
   import ChannelVideos from '@/components/ChannelVideos.vue';
+  import { useSearchQuery } from '@/composables/useSearchQuery';
+  
   
   export default defineComponent({
     components: {
@@ -47,6 +49,7 @@
       ChannelVideos
     },
     setup() {
+     const { searchQuery } = useSearchQuery();
       const route = useRoute();
       const channelId = route.params.id as string;
       const activeTab = ref<'videos' | 'playlists'>('videos');
