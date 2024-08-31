@@ -13,12 +13,13 @@
           <MdiIcon icon="mdiMenu" :size="26" />
         </button>
         <div class="mx-2"></div>
-        <div
-          class="flex text-white items-center justify-center mr-10 cursor-pointer font-roboto gap-0.5"
-        >
+        
+        <!-- Logo Section with Router Link -->
+        <router-link to="/" class="flex text-white items-center justify-center mr-10 cursor-pointer font-roboto gap-0.5">
           <img src="~/assets/images/YT-logo.png" alt="" width="36" />
           <img src="~/assets/images/YT-logo-text.png" alt="" width="70" />
-        </div>
+        </router-link>
+
       </div>
 
       <div class="w-[600px] md:block hidden">
@@ -81,6 +82,7 @@
     </div>
   </div>
 </template>
+
 
 
 
