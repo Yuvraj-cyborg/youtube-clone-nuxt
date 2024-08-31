@@ -7,7 +7,7 @@
     >
       <div class="flex items-center">
         <button
-          @click="openSideNav = !openSideNav"
+          @click="toggleSideNav"
           class="p-2 ml-3 rounded-full hover:bg-gray-800 inline-block cursor-pointer"
         >
           <MdiIcon icon="mdiMenu" :size="26" />
@@ -25,7 +25,7 @@
         <div class="rounded-full flex items-center bg-[#222222]">
           <input
             v-model="localSearchQuery"
-            @keydown.enter="emitSearchQuery"
+            @keydown.enter="handleSearchBarEnter"
             type="text"
             class="form-control block w-full px-5 py-1.5 text-base font-normal text-gray-200 bg-black placeholder-gray-400 bg-clip-padding border border-solid border-l-gray-700 border-y-gray-700 rounded-l-full transition ease-in-out m-0 border-transparent focus:ring-0"
             placeholder="Search"
@@ -51,19 +51,18 @@
       :class="openSideNav ? 'w-[240px]' : 'w-0'"
     >
       <ul v-if="openSideNav" class="p-5">
-        <SidenavItem :openSideNav="openSideNav" iconString="Home" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Music" @search="handleSearch" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Sport" @search="handleSearch" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Gaming" @search="handleSearch" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Movies" @search="handleSearch" />
-        <SidenavItem :openSideNav="openSideNav" iconString="News" @search="handleSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="Home" @search="handleSidebarSearch"/>
+        <SidenavItem :openSideNav="openSideNav" iconString="Music" @search="handleSidebarSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="Sport" @search="handleSidebarSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="Gaming" @search="handleSidebarSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="Movies" @search="handleSidebarSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="News" @search="handleSidebarSearch" />
         <div class="border-b border-b-gray-700 my-2.5"></div>
         <div class="text-gray-400 text-[14px] font-bold">
           About Press Copyright
           <div>Contact us</div>
           Creator Advertise Developers
         </div>
-        <div>c</div>
         <div class="text-gray-400 text-[14px] font-bold">
           Terms Privacy Policy & Safety
           <div>How Youtube works</div>
@@ -78,37 +77,56 @@
       class="transition-all duration-300"
       :class="openSideNav ? 'ml-[240px]' : 'ml-0'"
     >
-    <NuxtPage :searchQuery="searchQuery" /><!-- This is where your main content will be displayed -->
+      <NuxtPage :searchQuery="searchQuery" /><!-- This is where your main content will be displayed -->
     </div>
   </div>
 </template>
 
+
+
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSearchQuery } from '@/composables/useSearchQuery'; // Import the composable
 
 const openSideNav = ref(true);
+const showLocalSearchQuery = ref(true); // Flag to control visibility
 const { searchQuery } = useSearchQuery();
-const localSearchQuery = ref(searchQuery.value); // Local state for input
+const localSearchQuery = ref(''); // Local state for input
 
 const router = useRouter();
 
+const toggleSideNav = () => {
+  openSideNav.value = !openSideNav.value;
+};
+
+// Function to handle enter key in search bar
+const handleSearchBarEnter = () => {
+  emitSearchQuery();
+};
+
+// Function to handle search when clicked in the search bar
 const emitSearchQuery = () => {
   searchQuery.value = localSearchQuery.value; // Update global search query
   router.push({ path: '/', query: { search: localSearchQuery.value } }); // Redirect with query
+  showLocalSearchQuery.value = true; // Ensure local search query is visible
 };
 
-const handleSearch = (query: string) => {
-  localSearchQuery.value = query;
+// Function to handle search initiated from sidebar
+const handleSidebarSearch = (iconString: string) => {
+  const query = iconString === 'Home' ? 'hiphop' : iconString;
   searchQuery.value = query; // Update global search query
   router.push({ path: '/', query: { search: query } }); // Redirect with query
+  localSearchQuery.value = ''; // Clear the search bar
+  showLocalSearchQuery.value = true; // Maintain local search query visibility
 };
 
-watch(() => searchQuery.value, (newQuery) => {
-  localSearchQuery.value = newQuery;
+// Computed property for placeholder
+const computedPlaceholder = computed(() => {
+  return showLocalSearchQuery.value ? 'Search' : 'Search';
 });
 </script>
+
 
 <style scoped>
 #content {
