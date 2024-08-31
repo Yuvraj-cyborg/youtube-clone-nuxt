@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Top Navigation Bar -->
     <div
       id="TopNav"
       class="bg-[#0F0F0F] text-white w-full h-[60px] flex justify-between items-center z-20 p-4 fixed top-0 left-0"
@@ -15,8 +16,8 @@
         <div
           class="flex text-white items-center justify-center mr-10 cursor-pointer font-roboto gap-0.5"
         >
-          <img src="~/assets/images/YT-logo.png" alt="" width="36">
-          <img src="~/assets/images/YT-logo-text.png" alt="" width="70">
+          <img src="~/assets/images/YT-logo.png" alt="" width="36" />
+          <img src="~/assets/images/YT-logo-text.png" alt="" width="70" />
         </div>
       </div>
 
@@ -42,6 +43,8 @@
         />
       </div>
     </div>
+
+    <!-- Sidebar Navigation -->
     <div
       id="SideNav"
       class="fixed top-[60px] left-0 h-[calc(100vh-60px)] bg-[#0F0F0F] z-10 transition-all duration-300"
@@ -67,6 +70,15 @@
           <span>Test new features</span>
         </div>
       </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div
+      id="content"
+      class="transition-all duration-300"
+      :class="openSideNav ? 'ml-[240px]' : 'ml-0'"
+    >
+    <NuxtPage :searchQuery="searchQuery" /><!-- This is where your main content will be displayed -->
     </div>
   </div>
 </template>
@@ -99,4 +111,7 @@ watch(() => searchQuery.value, (newQuery) => {
 </script>
 
 <style scoped>
+#content {
+  padding-top: 60px; /* Ensure content doesn't overlap with TopNav */
+}
 </style>

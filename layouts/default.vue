@@ -6,9 +6,6 @@
     <div id="SideNav">
       <SidenavItem />
     </div>
-    <div id="Content">
-      <NuxtPage :searchQuery="searchQuery" />
-    </div>
   </div>
 </template>
 
