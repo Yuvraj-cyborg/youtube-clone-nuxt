@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center bg-[#0F0F0F]">
-    <div class="flex flex-row fixed top-10 left-0 right-0" style="height: 92.5vh;">
+    <div class="md:flex md:flex-row md:fixed top-10 left-0 right-0" style="height: 92.5vh;">
       <div class="video-player flex flex-col flex-grow p-7 mx-20 mr-0 overflow-auto bg-[#0F0F0F]">
         <div class="flex flex-col">
           <div class="flex justify-center">
@@ -34,25 +34,25 @@
                 <div class="like flex gap-3 bg-[#272727] rounded-3xl p-3 items-center justify-between">
                   <div class="flex items-center gap-2 cursor-pointer">
                     <div class="pb-1">
-                      <MdiIcon icon="mdiThumbUpOutline" :size="20"/>
+                      <MdiIcon icon="mdiThumbUpOutline" :size="'20'"/>
                     </div>
                     <p>{{ videoDetails.likes }}</p>
                   </div>
                   <div class="h-4 w-px bg-white"></div>
                   <div class="flex items-center gap-1 cursor-pointer">
                     <div class="pb-1">
-                      <MdiIcon icon="mdiThumbDownOutline" :size="20"/>
+                      <MdiIcon icon="mdiThumbDownOutline" :size="'20'"/>
                     </div>
                   </div>
                 </div>
                 <div class="flex items-center gap-1 cursor-pointer bg-[#272727] rounded-full p-1">
-                  <div class="pb-1"><MdiIcon icon="mdiShareOutline" :size="25"/></div>
+                  <div class="pb-1"><MdiIcon icon="mdiShareOutline" :size="'25'"/></div>
                 </div>
                 <div class="flex items-center gap-1 cursor-pointer bg-[#272727] rounded-full p-2">
-                  <MdiIcon icon="mdiDownloadOutline" :size="25"/>
+                  <MdiIcon icon="mdiDownloadOutline" :size="'25'"/>
                 </div>
                 <div class="flex items-center gap-1 cursor-pointer bg-[#272727] rounded-full p-2">
-                  <MdiIcon icon="mdiDotsHorizontal" :size="20"/>
+                  <MdiIcon icon="mdiDotsHorizontal" :size="'20'"/>
                 </div>
               </div>
             </div>

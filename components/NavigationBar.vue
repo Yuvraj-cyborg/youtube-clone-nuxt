@@ -10,7 +10,7 @@
           @click="toggleSideNav"
           class="p-2 ml-3 rounded-full hover:bg-gray-800 inline-block cursor-pointer"
         >
-          <MdiIcon icon="mdiMenu" :size="26" />
+          <MdiIcon icon="mdiMenu" :size="'26'" />
         </button>
         <div class="mx-2"></div>
         
@@ -31,7 +31,7 @@
             class="form-control block w-full px-5 py-1.5 text-base font-normal text-gray-200 bg-black placeholder-gray-400 bg-clip-padding border border-solid border-l-gray-700 border-y-gray-700 rounded-l-full transition ease-in-out m-0 border-transparent focus:ring-0"
             placeholder="Search"
           />
-          <MdiIcon icon="mdiMagnify" class="mx-6 cursor-pointer" :size="23" @click="emitSearchQuery" />
+          <MdiIcon icon="mdiMagnify" class="mx-6 cursor-pointer" :size="'23'" @click="emitSearchQuery" />
         </div>
       </div>
 
