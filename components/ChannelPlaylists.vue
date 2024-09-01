@@ -1,7 +1,7 @@
 <template>
   <div v-if="playlists.length" class="playlists-container p-4">
     <h3 class="text-white text-xl mb-4">Playlists</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div v-for="playlist in playlists" :key="playlist.id" class="playlist-item relative">
         <router-link :to="`/playlist/${playlist.id}`">
           <div class="relative">
