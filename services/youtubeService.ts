@@ -152,6 +152,7 @@ export const fetchChannelPlaylists = async (channelId: string): Promise<{
   title: string;
   thumbnail: string;
   description: string;
+  videoCount: number; // Added videoCount here
 }[]> => {
   const config = useRuntimeConfig();
   const apiKey = config.public.youtubeApiKey;
@@ -164,12 +165,20 @@ export const fetchChannelPlaylists = async (channelId: string): Promise<{
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
-    return data.items.map((item: any) => ({
-      id: item.id,
-      title: item.snippet.title,
-      thumbnail: item.snippet.thumbnails.medium.url,
-      description: item.snippet.description,
+
+    // Fetch video count for each playlist
+    const playlists = await Promise.all(data.items.map(async (item: any) => {
+      const details = await fetchPlaylistDetails(item.id);
+      return {
+        id: item.id,
+        title: item.snippet.title,
+        thumbnail: details.thumbnail,
+        description: item.snippet.description,
+        videoCount: details.videoCount, // Include videoCount here
+      };
     }));
+
+    return playlists;
   } catch (error) {
     console.error('Error fetching channel playlists:', error);
     return [];
