@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center bg-[#0F0F0F]">
     <div class="md:flex md:flex-row md:fixed top-10 left-0 right-0" style="height: 92.5vh;">
-      <div class="video-player flex flex-col flex-grow p-7 mx-20 mr-0 overflow-auto bg-[#0F0F0F]">
+      <div class="video-player flex flex-col flex-grow p-7 mx-5 mr-0 overflow-auto bg-[#0F0F0F]">
         <div class="flex flex-col">
           <div class="flex justify-center">
             <iframe
