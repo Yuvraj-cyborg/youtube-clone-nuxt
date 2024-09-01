@@ -51,6 +51,11 @@ export default defineComponent({
 
 
 <style scoped>
+.playlist-item {
+  position: relative;
+  overflow: hidden; /* Ensure the overlay doesn't extend beyond the item boundaries */
+}
+
 .playlist-item img {
   transition: transform 0.3s ease;
 }
@@ -59,12 +64,16 @@ export default defineComponent({
   transform: scale(1.05);
 }
 
+.playlist-item:hover .video-count-overlay {
+  height: 35%; /* Increase height on hover */
+}
+
 .video-count-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 25%; /* Adjust the height if needed */
+  height: 25%; /* Default height */
   background: rgba(0, 0, 0, 0.6); /* Black background with opacity */
   display: flex;
   align-items: center;
@@ -74,5 +83,6 @@ export default defineComponent({
   font-weight: bold;
   box-sizing: border-box;
   padding: 0 0.5rem; /* Add some padding for better spacing */
+  transition: height 0.3s ease; /* Smooth transition for height change */
 }
 </style>
