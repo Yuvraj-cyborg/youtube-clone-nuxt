@@ -1,41 +1,38 @@
 <template>
   <div
     :class="[
-      'flex flex-col items-center bg-[#0F0F0F] transition-all duration-300',
+      'flex flex-col bg-[#0F0F0F] transition-all duration-300 w-full h-full ml-0',
       openSideNav ? 'ml-[240px]' : 'ml-0'
     ]"
   >
     <div
-      class="md:flex md:flex-row top-10 left-0 right-0 transition-all duration-300"
-      style="height: 92.5vh;"
+      class="md:flex md:flex-row w-full h-full transition-all duration-300"
     >
       <div
         :class="[
-          'video-player flex flex-col flex-grow p-4 mx-0 mr-0 overflow-auto bg-[#0F0F0F] transition-all duration-300',
+          'video-player flex flex-col flex-grow overflow-auto bg-[#0F0F0F] transition-all duration-300',
           openSideNav ? 'md:mr-64' : ''
         ]"
       >
-        <div class="flex flex-col">
-          <div class="flex justify-center">
+        <div class="flex flex-col w-full max-w-5xl mx-auto px-0">
+          <div class="flex ">
             <iframe
               :src="videoSrc"
-              width="800"
-              height="502"
+              class="w-full aspect-video"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
               title="YouTube video player"
-              class="w-full"
             ></iframe>
           </div>
           <div class="mt-5">
             <p class="text-xl text-white pb-4">{{ videoDetails.title }}</p>
             <div class="flex justify-between mt-1 text-sm text-white">
-              <div class="flex items-center gap-3" @click="goToChannelPage">
+              <div class="flex items-center gap-3 cursor-pointer" @click="goToChannelPage">
                 <img
                   :src="videoDetails.channelImage"
                   alt="Channel Image"
-                  class="w-10 h-10 rounded-full cursor-pointer"
+                  class="w-10 h-10 rounded-full"
                 />
                 <div>
                   <span class="font-semibold text-xl">{{ videoDetails.channelName }}</span>
@@ -80,12 +77,13 @@
           </div>
         </div>
       </div>
-      <div class="recomended-video flex w-[450px] bg-[#0F0F0F] text-gray-200 p-1 overflow-auto justify-center">
+      <div class="recommended-video flex w-full md:max-w-[450px] bg-[#0F0F0F] text-gray-200 overflow-auto">
         <RecommendedVideos :searchQuery="searchQuery" />
       </div>
     </div>
   </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
@@ -155,7 +153,7 @@ export default defineComponent({
 .w-full {
   width: 100%;
 }
-.recomended-video::-webkit-scrollbar {
+.recommended-video::-webkit-scrollbar {
   display: none;
 }
 .video-player::-webkit-scrollbar {
@@ -163,5 +161,6 @@ export default defineComponent({
 }
 body {
   background-color: #0f0f0f;
+  margin: 0; /* Remove any default margin or padding */
 }
 </style>
