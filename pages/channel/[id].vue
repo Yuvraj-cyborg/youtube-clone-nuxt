@@ -1,9 +1,7 @@
 <template>
     <div class="flex flex-col items-center bg-[#0F0F0F]">
-      <!-- Channel Details -->
       <ChannelDetails :channelId="channelId" />
   
-      <!-- Tab Navigation -->
       <div class="w-full max-w-screen-xl px-0 flex border-b-[1px] border-gray-700">
         <button
           class="py-1 px-2 text-white text-sm border-b-2 transition-colors duration-300 ease-in-out"
@@ -21,7 +19,6 @@
         </button>
       </div>
   
-      <!-- Tab Content -->
       <div class="w-full max-w-screen-xl px-4 py-4">
         <div v-if="activeTab === 'videos'">
           <ChannelVideos :channelId="channelId" />
@@ -63,14 +60,13 @@
   </script>
   
   <style scoped>
-  /* Ensure that the active tab underline aligns with the text length and stays within the parent border */
   button {
-    flex: 0; /* Don't stretch to full width */
-    margin-right: 1px; /* Add a small margin between buttons */
+    flex: 0; 
+    margin-right: 1px; 
   }
   
   button:last-child {
-    margin-right: 0; /* Remove margin for the last button */
+    margin-right: 0; 
   }
   </style>
   

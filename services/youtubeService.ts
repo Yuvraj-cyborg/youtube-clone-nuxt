@@ -11,8 +11,8 @@ export const fetchVideoDetails = async (videoId: string): Promise<{
   description: string;
   channelImage: string;
   channelName: string;
-  channelId: string; // Added channelId here
-  subscribers: string; // Fetching subscribers here
+  channelId: string; 
+  subscribers: string; 
 } | null> => {
   const config = useRuntimeConfig();
   const apiKey = config.public.youtubeApiKey;
@@ -44,7 +44,7 @@ export const fetchVideoDetails = async (videoId: string): Promise<{
         channelImage: channelData.items[0].snippet.thumbnails.default.url,
         channelName: snippet.channelTitle,
         channelId, // Adding channelId here
-        subscribers: channelData.items[0].statistics.subscriberCount, // Fetching subscriber count
+        subscribers: channelData.items[0].statistics.subscriberCount, 
       };
     }
     return null;
@@ -97,7 +97,7 @@ export const fetchRecommendedVideos = async (videoId: string): Promise<{
       id: item.id.videoId,
       title: item.snippet.title,
       channelName: item.snippet.channelTitle,
-      views: 'N/A', // Placeholder until you implement fetching views
+      views: 'N/A', 
       thumbnail: item.snippet.thumbnails.medium.url,
     }));
   } catch (error) {
@@ -152,7 +152,7 @@ export const fetchChannelPlaylists = async (channelId: string): Promise<{
   title: string;
   thumbnail: string;
   description: string;
-  videoCount: number; // Added videoCount here
+  videoCount: number; 
 }[]> => {
   const config = useRuntimeConfig();
   const apiKey = config.public.youtubeApiKey;
@@ -174,7 +174,7 @@ export const fetchChannelPlaylists = async (channelId: string): Promise<{
         title: item.snippet.title,
         thumbnail: details.thumbnail,
         description: item.snippet.description,
-        videoCount: details.videoCount, // Include videoCount here
+        videoCount: details.videoCount,
       };
     }));
 

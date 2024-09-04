@@ -169,15 +169,15 @@ export default defineComponent({
       () => route.query.search,
       (newQuery) => {
         const query = newQuery as string || defaultQuery;
-        videos.value = []; // Clear existing videos on new search
+        videos.value = []; 
         nextPageToken.value = null;
         fetchVideos(query);
       },
-      { immediate: true } // Run immediately on setup
+      { immediate: true } 
     );
 
     onMounted(() => {
-      handleScroll(); // Initial fetch on mount
+      handleScroll(); 
       window.addEventListener('scroll', handleScroll);
     });
 
