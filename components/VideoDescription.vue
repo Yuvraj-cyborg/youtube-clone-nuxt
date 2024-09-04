@@ -48,7 +48,7 @@ export default defineComponent({
       if (video) {
         description.value = video.description;
         views.value = video.views;
-        uploadTime.value = new Date(video.age).toLocaleDateString(); // Format date as desired
+        uploadTime.value = new Date(video.age).toLocaleDateString(); 
       }
     };
 

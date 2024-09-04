@@ -37,7 +37,6 @@ import { defineComponent, ref, watch, onMounted } from 'vue';
 import { useRuntimeConfig } from '#app';
 import VideoCard from '@/components/VideoCard.vue';
 
-// Define types for video snippet and video item
 interface VideoSnippet {
   title: string;
   channelTitle: string;

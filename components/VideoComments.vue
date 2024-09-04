@@ -5,7 +5,7 @@
       <div v-for="comment in comments" :key="comment.id" class="mb-4">
         <div class="flex items-start mb-2">
           <img :src="comment.snippet.topLevelComment.snippet.authorProfileImageUrl" alt="Author" class="w-10 h-10 rounded-full mr-3" />
-          <div class="max-w-full lg:max-w-[600px]"> <!-- Added fixed max-width -->
+          <div class="max-w-full lg:max-w-[600px]"> 
             <p class="font-semibold">{{ comment.snippet.topLevelComment.snippet.authorDisplayName }}</p>
             <p class="text-sm text-gray-400 break-words" v-html="comment.snippet.topLevelComment.snippet.textDisplay"></p> <!-- Added break-words -->
           </div>

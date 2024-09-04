@@ -1,7 +1,20 @@
 <template>
-  <div class="flex flex-col items-center bg-[#0F0F0F]">
-    <div class="md:flex md:flex-row md:fixed top-10 left-0 right-0" style="height: 92.5vh;">
-      <div class="video-player flex flex-col flex-grow p-7 mx-5 mr-0 overflow-auto bg-[#0F0F0F]">
+  <div
+    :class="[
+      'flex flex-col items-center bg-[#0F0F0F] transition-all duration-300',
+      openSideNav ? 'ml-[240px]' : 'ml-0'
+    ]"
+  >
+    <div
+      class="md:flex md:flex-row top-10 left-0 right-0 transition-all duration-300"
+      style="height: 92.5vh;"
+    >
+      <div
+        :class="[
+          'video-player flex flex-col flex-grow p-4 mx-0 mr-0 overflow-auto bg-[#0F0F0F] transition-all duration-300',
+          openSideNav ? 'md:mr-64' : ''
+        ]"
+      >
         <div class="flex flex-col">
           <div class="flex justify-center">
             <iframe
@@ -18,41 +31,42 @@
           <div class="mt-5">
             <p class="text-xl text-white pb-4">{{ videoDetails.title }}</p>
             <div class="flex justify-between mt-1 text-sm text-white">
-              <div class="flex items-center gap-3">
+              <div class="flex items-center gap-3" @click="goToChannelPage">
                 <img
                   :src="videoDetails.channelImage"
                   alt="Channel Image"
                   class="w-10 h-10 rounded-full cursor-pointer"
-                  @click="goToChannelPage"
-                >
+                />
                 <div>
-                <span class="font-semibold text-xl">{{ videoDetails.channelName }}</span>
-                <p class="text-sm text-gray-400">{{ videoDetails.subscribers }} Subscribers</p>
+                  <span class="font-semibold text-xl">{{ videoDetails.channelName }}</span>
+                  <p class="text-sm text-gray-400">{{ videoDetails.subscribers }} Subscribers</p>
                 </div>
               </div>
               <div class="flex items-center gap-4 uppercase">
                 <div class="like flex gap-3 bg-[#272727] rounded-3xl p-3 items-center justify-between">
                   <div class="flex items-center gap-2 cursor-pointer">
                     <div class="pb-1">
-                      <MdiIcon icon="mdiThumbUpOutline" :size="'20'"/>
+                      <MdiIcon icon="mdiThumbUpOutline" :size="'20'" />
                     </div>
                     <p>{{ videoDetails.likes }}</p>
                   </div>
                   <div class="h-4 w-px bg-white"></div>
                   <div class="flex items-center gap-1 cursor-pointer">
                     <div class="pb-1">
-                      <MdiIcon icon="mdiThumbDownOutline" :size="'20'"/>
+                      <MdiIcon icon="mdiThumbDownOutline" :size="'20'" />
                     </div>
                   </div>
                 </div>
                 <div class="flex items-center gap-1 cursor-pointer bg-[#272727] rounded-full p-1">
-                  <div class="pb-1"><MdiIcon icon="mdiShareOutline" :size="'25'"/></div>
+                  <div class="pb-1">
+                    <MdiIcon icon="mdiShareOutline" :size="'25'" />
+                  </div>
                 </div>
                 <div class="flex items-center gap-1 cursor-pointer bg-[#272727] rounded-full p-2">
-                  <MdiIcon icon="mdiDownloadOutline" :size="'25'"/>
+                  <MdiIcon icon="mdiDownloadOutline" :size="'25'" />
                 </div>
                 <div class="flex items-center gap-1 cursor-pointer bg-[#272727] rounded-full p-2">
-                  <MdiIcon icon="mdiDotsHorizontal" :size="'20'"/>
+                  <MdiIcon icon="mdiDotsHorizontal" :size="'20'" />
                 </div>
               </div>
             </div>
@@ -76,34 +90,30 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { fetchVideoDetails } from "../services/youtubeService";
+import { fetchVideoDetails } from '../services/youtubeService';
 import VideoDescription from '@/components/VideoDescription.vue';
 import VideoComments from '../components/VideoComments.vue';
-import RecommendedVideos from '../components/RecommendedVideos.vue'; // Ensure this import is correct
+import RecommendedVideos from '../components/RecommendedVideos.vue';
 
 export default defineComponent({
   components: {
     VideoDescription,
     VideoComments,
-    RecommendedVideos
+    RecommendedVideos,
   },
-  setup() {
+  props: {
+    openSideNav: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  setup(props) {
     const route = useRoute();
     const router = useRouter();
     const videoId = route.params.id as string;
-    const searchQuery = ref(''); // Define search query here or get it from some state
+    const searchQuery = ref('');
 
-    const videoDetails = ref<{
-      title: string;
-      views: string;
-      age: string;
-      likes: string;
-      description: string;
-      channelImage: string;
-      channelName: string;
-      channelId: string; 
-      subscribers: string;// Assuming you have the channelId here
-    }>({
+    const videoDetails = ref({
       title: '',
       views: '',
       age: '',
@@ -112,10 +122,12 @@ export default defineComponent({
       channelImage: '',
       channelName: '',
       channelId: '',
-      subscribers: '', // Initialize with empty string
+      subscribers: '',
     });
 
-    const videoSrc = computed(() => `https://www.youtube.com/embed/${videoId}?autoplay=1`);
+    const videoSrc = computed(
+      () => `https://www.youtube.com/embed/${videoId}?autoplay=1`
+    );
 
     const goToChannelPage = () => {
       router.push({ path: `/channel/${videoDetails.value.channelId}` });
@@ -126,13 +138,14 @@ export default defineComponent({
         videoDetails.value = details;
       }
     });
-   
+
     return {
       videoSrc,
       videoDetails,
       videoId,
       searchQuery,
-      goToChannelPage
+      goToChannelPage,
+      openSideNav: props.openSideNav,
     };
   },
 });
@@ -148,7 +161,7 @@ export default defineComponent({
 .video-player::-webkit-scrollbar {
   display: none;
 }
-body{
-  background-color: #0F0F0F;
+body {
+  background-color: #0f0f0f;
 }
 </style>

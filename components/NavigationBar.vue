@@ -52,12 +52,12 @@
       :class="openSideNav ? 'w-[240px]' : 'w-0'"
     >
       <ul v-if="openSideNav" class="p-5">
-        <SidenavItem :openSideNav="openSideNav" iconString="Home" @search="handleSidebarSearch"/>
-        <SidenavItem :openSideNav="openSideNav" iconString="Music" @search="handleSidebarSearch" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Sport" @search="handleSidebarSearch" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Gaming" @search="handleSidebarSearch" />
-        <SidenavItem :openSideNav="openSideNav" iconString="Movies" @search="handleSidebarSearch" />
-        <SidenavItem :openSideNav="openSideNav" iconString="News" @search="handleSidebarSearch" />
+        <SidenavItem :openSideNav="openSideNav" iconString="Home"/>
+        <SidenavItem :openSideNav="openSideNav" iconString="Music"  />
+        <SidenavItem :openSideNav="openSideNav" iconString="Sport"  />
+        <SidenavItem :openSideNav="openSideNav" iconString="Gaming"  />
+        <SidenavItem :openSideNav="openSideNav" iconString="Movies"  />
+        <SidenavItem :openSideNav="openSideNav" iconString="News" />
         <div class="border-b border-b-gray-700 my-2.5"></div>
         <div class="text-gray-400 text-[14px] font-bold">
           About Press Copyright
@@ -114,19 +114,7 @@ const emitSearchQuery = () => {
   showLocalSearchQuery.value = true; // Ensure local search query is visible
 };
 
-// Function to handle search initiated from sidebar
-const handleSidebarSearch = (iconString: string) => {
-  const query = iconString === 'Home' ? 'hiphop' : iconString;
-  searchQuery.value = query; // Update global search query
-  router.push({ path: '/', query: { search: query } }); // Redirect with query
-  localSearchQuery.value = ''; // Clear the search bar
-  showLocalSearchQuery.value = true; // Maintain local search query visibility
-};
 
-// Computed property for placeholder
-const computedPlaceholder = computed(() => {
-  return showLocalSearchQuery.value ? 'Search' : 'Search';
-});
 </script>
 
 

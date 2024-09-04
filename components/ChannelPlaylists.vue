@@ -35,7 +35,7 @@ export default defineComponent({
       title: string;
       thumbnail: string;
       description: string;
-      videoCount: number; // Add videoCount here
+      videoCount: number; 
     }>>([]);
 
     onMounted(async () => {
@@ -53,7 +53,7 @@ export default defineComponent({
 <style scoped>
 .playlist-item {
   position: relative;
-  overflow: hidden; /* Ensure the overlay doesn't extend beyond the item boundaries */
+  overflow: hidden; 
 }
 
 .playlist-item img {
@@ -65,7 +65,7 @@ export default defineComponent({
 }
 
 .playlist-item:hover .video-count-overlay {
-  height: 35%; /* Increase height on hover */
+  height: 35%;
 }
 
 .video-count-overlay {
@@ -73,8 +73,8 @@ export default defineComponent({
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 25%; /* Default height */
-  background: rgba(0, 0, 0, 0.6); /* Black background with opacity */
+  height: 25%; 
+  background: rgba(0, 0, 0, 0.6); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,7 +82,7 @@ export default defineComponent({
   font-size: 0.9rem;
   font-weight: bold;
   box-sizing: border-box;
-  padding: 0 0.5rem; /* Add some padding for better spacing */
-  transition: height 0.3s ease; /* Smooth transition for height change */
+  padding: 0 0.5rem; 
+  transition: height 0.3s ease; 
 }
 </style>
