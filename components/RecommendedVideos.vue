@@ -2,10 +2,11 @@
   <div class="p-4">
     <h2 class="text-lg font-bold text-white mb-4">Recommended Videos</h2>
     <div class="flex flex-col gap-4">
-      <div 
+      <router-link
         v-for="video in videos"
         :key="video.id.videoId"
-        class="flex items-start gap-4"
+        :to="`/video/${video.id.videoId}`"
+        class="flex items-start gap-4 hover:bg-gray-700 p-2 rounded-lg transition-colors"
       >
         <div class="flex-shrink-0">
           <VideoCard
@@ -27,10 +28,11 @@
             {{ video.statistics.viewCount ? `${video.statistics.viewCount} views` : 'No views available' }} • {{ timeSincePublished(video.snippet.publishedAt) }}
           </p>
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent, ref, watch, onMounted } from 'vue';
@@ -132,6 +134,7 @@ export default defineComponent({
             return { ...item, channelImage };
           })
         );
+        
 
         videos.value = videoItems;
       } catch (error) {
